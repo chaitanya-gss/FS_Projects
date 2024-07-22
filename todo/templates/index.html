@@ -1,0 +1,57 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Todo App</h1>
+        <div id="user-info">
+            <!-- Display username and logout button -->
+            {% if current_user.is_authenticated %}
+                <p>Welcome, {{ current_user.username }}!</p>
+                <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            {% endif %}
+        </div>
+    </header>
+    
+    <main>
+        <div id="lists">
+            <!-- Display lists added by the user -->
+            {% for list_item in lists %}
+                <div class="list-item">
+                    <h2>{{ list_item.title }}</h2>
+                    <ul>
+                        <!-- Display tasks for each list -->
+                        {% for task in list_item.tasks %}
+                            <li>{{ task }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Button to add a new list -->
+        <button id="add-list-btn">Add List</button>
+        
+        <!-- Modal for adding a new list -->
+        <div id="add-list-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="add-list-form">
+                    <input type="text" id="list-title" placeholder="List Title" required>
+                    <button type="submit">Create List</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
